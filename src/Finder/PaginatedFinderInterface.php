@@ -15,6 +15,9 @@ use Elastica\Query;
 use FOS\ElasticaBundle\Paginator\PaginatorAdapterInterface;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * @method Pagerfanta findHybridPaginated($query) Searches for query hybrid results.
+ */
 interface PaginatedFinderInterface extends FinderInterface
 {
     /**
