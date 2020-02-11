@@ -49,20 +49,19 @@ class ProfilerTest extends WebTestCase
         $twigLoaderFilesystem->addPath(__DIR__ . '/../../vendor/symfony/web-profiler-bundle/Resources/views', 'WebProfiler');
         $this->twig = new Environment($twigLoaderFilesystem, ['debug' => true, 'strict_variables' => true]);
 
-        $urlGeneratorMock = $this->createMock(UrlGeneratorInterface::class);
-        $fragmentHandlerMock = $this->createMock(FragmentHandler::class);
-        $loaderMock = $this->createMock(RuntimeLoaderInterface::class);
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $urlGenerator->method('generate')->willReturn('');
+        $fragmentHandler = $this->createMock(FragmentHandler::class);
+        $fragmentHandler->method('render')->willReturn('');
 
         $this->twig->addExtension(new CodeExtension('', '', ''));
-        $this->twig->addExtension(new RoutingExtension($urlGeneratorMock));
-        $this->twig->addExtension(new HttpKernelExtension());
+        $this->twig->addExtension(new RoutingExtension($urlGenerator));
+        $this->twig->addExtension(new HttpKernelExtension($fragmentHandler));
 
+        $loader = $this->getMockBuilder(RuntimeLoaderInterface::class)->getMock();
 
-        $urlGeneratorMock->method('generate')->willReturn('');
-        $fragmentHandlerMock->method('render')->willReturn('');
-        $loaderMock->method('load')->willReturn(new HttpKernelRuntime($fragmentHandlerMock));
-
-        $this->twig->addRuntimeLoader($loaderMock);
+        $loader->method('load')->willReturn(new HttpKernelRuntime($fragmentHandler));
+        $this->twig->addRuntimeLoader($loader);
     }
 
     /**

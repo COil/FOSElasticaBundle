@@ -52,7 +52,7 @@ class SearchCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $indexName = $input->getOption('index');
         $index = $this->indexManager->getIndex($indexName ? $indexName : null);
