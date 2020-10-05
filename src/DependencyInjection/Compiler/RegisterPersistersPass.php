@@ -56,9 +56,9 @@ final class RegisterPersistersPass implements CompilerPassInterface
                     $this->assertClassImplementsPersisterInterface($id, $container->getParameterBag()->resolveValue($persisterDef->getClass()));
                 }
 
-                if (!$persisterDef->isPublic()) {
-                    throw new \InvalidArgumentException(sprintf('Elastica persister "%s" must be a public service', $id));
-                }
+                //if (!$persisterDef->isPublic()) {
+                    //throw new \InvalidArgumentException(sprintf('Elastica persister "%s" must be a public service', $id));
+                //}
 
                 $registeredPersisters[$index][$type] = $id;
             }
